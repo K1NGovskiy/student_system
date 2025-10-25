@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Система успеваемости</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="fas fa-university me-2"></i>Деканат
+            </a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="students.html"><i class="fas fa-users me-1"></i>Студенты</a></li>
+                <li class="nav-item"><a class="nav-link" href="courses.html"><i class="fas fa-book me-1"></i>Курсы</a></li>
+                <li class="nav-item"><a class="nav-link" href="grades.html"><i class="fas fa-clipboard-list me-1"></i>Ведомость</a></li>
+                <li class="nav-item"><a class="nav-link" href="summary.html"><i class="fas fa-chart-line me-1"></i>Итоговая успеваемость</a></li>
+                <li class="nav-item"><a class="nav-link" href="average.html"><i class="fas fa-calculator me-1"></i>Средний балл</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white">
+                <h1 class="card-title mb-0">
+                    <i class="fas fa-tachometer-alt me-2"></i>Добро пожаловать в систему управления успеваемостью!
+                </h1>
+            </div>
+            <div class="card-body">
+                <p class="lead">Используйте меню для навигации по разделам системы.</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-primary">
+                            <div class="card-body text-center">
+                                <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                                <h5 class="card-title">Студенты</h5>
+                                <p class="card-text">Управление списком студентов и их группами</p>
+                                <a href="students.html" class="btn btn-primary">Перейти</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-success">
+                            <div class="card-body text-center">
+                                <i class="fas fa-book fa-3x text-success mb-3"></i>
+                                <h5 class="card-title">Курсы</h5>
+                                <p class="card-text">Управление учебными курсами и преподавателями</p>
+                                <a href="courses.html" class="btn btn-success">Перейти</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-warning">
+                            <div class="card-body text-center">
+                                <i class="fas fa-clipboard-list fa-3x text-warning mb-3"></i>
+                                <h5 class="card-title">Ведомость</h5>
+                                <p class="card-text">Ввод и просмотр оценок студентов</p>
+                                <a href="grades.html" class="btn btn-warning">Перейти</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-2">
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 border-info">
+                            <div class="card-body text-center">
+                                <i class="fas fa-chart-line fa-3x text-info mb-3"></i>
+                                <h5 class="card-title">Итоговая успеваемость</h5>
+                                <p class="card-text">Сводные данные по успеваемости студентов</p>
+                                <a href="summary.html" class="btn btn-info">Перейти</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 border-danger">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calculator fa-3x text-danger mb-3"></i>
+                                <h5 class="card-title">Средний балл</h5>
+                                <p class="card-text">Анализ средних баллов по группам</p>
+                                <a href="average.html" class="btn btn-danger">Перейти</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white mt-5 py-3">
+        <div class="container text-center">
+             <p class="mb-0">2025 Курсовая работа. Система учёта успеваемости.</p>
+        </div>
+    </footer>
+</body>
+</html>

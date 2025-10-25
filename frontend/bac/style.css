@@ -1,0 +1,15 @@
+/* Простые стили для frontend */
+body {
+    font-family: Arial, sans-serif;  /* Шрифт */
+    background-color: #f4f4f4;  /* Фон */
+}
+.container {
+    max-width: 1200px;  /* Ширина контейнера */
+    margin: auto;  /* Центрирование */
+}
+.table {
+    background-color: white;  /* Фон таблицы */
+}
+.btn-primary {
+    background-color: #007bff;  /* Цвет кнопки */
+}

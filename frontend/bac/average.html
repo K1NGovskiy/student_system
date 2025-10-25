@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Средний балл по группам</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Деканат</a>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="students.html">Студенты</a></li>
+                <li class="nav-item"><a class="nav-link" href="courses.html">Курсы</a></li>
+                <li class="nav-item"><a class="nav-link" href="grades.html">Ведомость</a></li>
+                <li class="nav-item"><a class="nav-link" href="summary.html">Итоговая успеваемость</a></li>
+                <li class="nav-item"><a class="nav-link" href="average.html">Средний балл</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h1>Средний балл по группам</h1>
+        
+        <div class="alert alert-info">
+            <strong>Информация:</strong> Отображается средний балл для групп, у которых есть оценки.
+        </div>
+        
+        <div id="loadingMessage" class="alert alert-warning">
+            Загрузка данных...
+        </div>
+        
+        <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
+        
+        <div id="successContent" style="display: none;">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Группа</th>
+                        <th>Средний балл</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTable"></tbody>
+            </table>
+            
+            <div id="noDataMessage" class="alert alert-warning" style="display: none;">
+                Нет данных для отображения. Возможно, в системе нет оценок.
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        // Специальная функция для загрузки данных среднего балла
+        async function loadAverageData() {
+            const loadingElement = document.getElementById('loadingMessage');
+            const errorElement = document.getElementById('errorMessage');
+            const successElement = document.getElementById('successContent');
+            const noDataElement = document.getElementById('noDataMessage');
+            
+            // Показываем загрузку, скрываем остальное
+            loadingElement.style.display = 'block';
+            errorElement.style.display = 'none';
+            successElement.style.display = 'none';
+            noDataElement.style.display = 'none';
+            
+            try {
+                const response = await fetch('http://localhost:8000/average/');
+                if (!response.ok) {
+                    throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('Данные среднего балла:', data);
+                
+                // Скрываем сообщение о загрузке
+                loadingElement.style.display = 'none';
+                
+                if (!data || data.length === 0) {
+                    // Нет данных
+                    noDataElement.style.display = 'block';
+                    successElement.style.display = 'block';
+                    document.getElementById('dataTable').innerHTML = '';
+                } else {
+                    // Есть данные - отображаем таблицу
+                    renderAverageTable(data);
+                    successElement.style.display = 'block';
+                    noDataElement.style.display = 'none';
+                }
+                
+            } catch (error) {
+                console.error('Ошибка загрузки среднего балла:', error);
+                loadingElement.style.display = 'none';
+                errorElement.style.display = 'block';
+                errorElement.textContent = `Ошибка загрузки данных: ${error.message}`;
+                successElement.style.display = 'none';
+            }
+        }
+        
+        // Функция для отрисовки таблицы среднего балла
+        function renderAverageTable(data) {
+            const tableBody = document.getElementById('dataTable');
+            tableBody.innerHTML = '';
+            
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                
+                // Группа
+                const groupCell = document.createElement('td');
+                groupCell.textContent = item.group_name || 'Неизвестная группа';
+                groupCell.className = 'fw-bold';
+                
+                // Средний балл
+                const avgCell = document.createElement('td');
+                if (item.avg_grade !== undefined && item.avg_grade !== null) {
+                    const avgGrade = Number(item.avg_grade);
+                    avgCell.textContent = avgGrade.toFixed(2);
+                    avgCell.className = 'fw-bold text-primary';
+                    
+                    // Добавляем цветовое кодирование
+                    if (avgGrade >= 4.5) {
+                        avgCell.className = 'fw-bold text-success';
+                    } else if (avgGrade >= 3.5) {
+                        avgCell.className = 'fw-bold text-primary';
+                    } else if (avgGrade >= 2.5) {
+                        avgCell.className = 'fw-bold text-warning';
+                    } else {
+                        avgCell.className = 'fw-bold text-danger';
+                    }
+                } else {
+                    avgCell.textContent = 'Нет данных';
+                    avgCell.className = 'text-muted';
+                }
+                
+                row.appendChild(groupCell);
+                row.appendChild(avgCell);
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Загрузка данных при открытии страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAverageData();
+        });
+        
+        // Обновление данных каждые 30 секунд
+        setInterval(loadAverageData, 30000);
+    </script>
+</body>
+</html>
